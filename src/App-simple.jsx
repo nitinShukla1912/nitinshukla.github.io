@@ -54,7 +54,7 @@ function App() {
         <section id="about" className="hero">
           <div className="profile-section">
             <img 
-              src="/nitin_shukla.github.io/images/nitin-profile.png" 
+              src="/images/nitin-profile.png" 
               alt="Nitin Shukla" 
               className="profile-photo"
             />
