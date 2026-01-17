@@ -7,11 +7,38 @@ const HeroAboutSection = () => {
         <div className="hero-about-content">
           <div className="hero-left">
             <div className="hero-photo">
-              <img 
-                src="/images/nitin-profile.png" 
-                alt="Nitin Shukla" 
-                className="profile-image"
-              />
+              <picture>
+                <source
+                  srcSet="/images/nitin-profile-2x.avif 2x, /images/nitin-profile.avif 1x"
+                  type="image/avif"
+                  media="(min-width: 769px)"
+                />
+                <source
+                  srcSet="/images/nitin-profile-mobile-2x.avif 2x, /images/nitin-profile-mobile.avif 1x"
+                  type="image/avif"
+                  media="(max-width: 768px)"
+                />
+                <source
+                  srcSet="/images/nitin-profile-2x.webp 2x, /images/nitin-profile.webp 1x"
+                  type="image/webp"
+                  media="(min-width: 769px)"
+                />
+                <source
+                  srcSet="/images/nitin-profile-mobile-2x.webp 2x, /images/nitin-profile-mobile.webp 1x"
+                  type="image/webp"
+                  media="(max-width: 768px)"
+                />
+                <img
+                  src="/images/nitin-profile-2x.png"
+                  alt="Nitin Shukla"
+                  className="profile-image"
+                  loading="eager"
+                  fetchpriority="high"
+                  decoding="async"
+                  width="280"
+                  height="280"
+                />
+              </picture>
             </div>
             <h1 className="hero-name">Nitin Shukla</h1>
             <h2 className="hero-subtitle">
