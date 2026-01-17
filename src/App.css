@@ -7,7 +7,6 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
   overflow-x: hidden;
 }
 
@@ -32,11 +31,10 @@ body {
   left: 0;
   right: 0;
   background-color: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
   z-index: 1000;
   border-bottom: 1px solid rgba(229, 229, 229, 0.8);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-container {
@@ -96,13 +94,43 @@ body {
   transform: translateY(0);
 }
 
+/* Hamburger Menu */
+.hamburger-menu {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1001;
+}
+
+.hamburger-menu span {
+  width: 25px;
+  height: 2px;
+  background-color: #1a1a1a;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+}
+
+.hamburger-menu span.open:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger-menu span.open:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-menu span.open:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
 /* Sections */
 section {
-  min-height: 100vh;
-  padding: 100px 2rem 4rem;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
+  padding: 80px 2rem 3rem;
   position: relative;
+  contain: layout style paint;
 }
 
 .section-container {
@@ -137,9 +165,8 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 100px 2rem 4rem;
+  padding: 80px 2rem 3rem;
   background-color: #ffffff;
-  scroll-snap-align: start;
 }
 
 .hero-about-container {
@@ -150,15 +177,13 @@ section {
 
 .hero-about-content {
   display: grid;
-  grid-template-columns: 400px 1fr;
+  grid-template-columns: minmax(300px, 400px) 1fr;
   gap: 4rem;
   align-items: start;
 }
 
 .hero-left {
   text-align: center;
-  position: sticky;
-  top: 120px;
 }
 
 .hero-photo {
@@ -318,12 +343,7 @@ section {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
-  
-  .hero-left {
-    position: relative;
-    top: 0;
-  }
-  
+
   .profile-image {
     width: 220px;
     height: 220px;
@@ -559,6 +579,7 @@ section {
   border-radius: 8px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-left: 3px solid transparent;
+  contain: layout style paint;
 }
 
 .news-item:hover {
@@ -620,6 +641,7 @@ section {
   border: 1px solid rgba(229, 229, 229, 0.6);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  contain: layout style paint;
 }
 
 .project-card:hover {
@@ -700,7 +722,7 @@ section {
 /* Publications Section */
 .publications-section {
   background-color: #f8f9fa;
-  padding-top: 4rem;
+  padding-top: 2rem;
 }
 
 .publications-content {
@@ -715,6 +737,7 @@ section {
   border-radius: 8px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   margin-bottom: 1rem;
+  contain: layout style paint;
 }
 
 .publication-item:last-child {
@@ -828,39 +851,57 @@ section {
 @media (max-width: 768px) {
   .nav-container {
     padding: 1rem;
-    flex-direction: column;
-    gap: 1rem;
   }
-  
+
   .nav-name h1 {
     font-size: 1.3rem;
-    flex-wrap: wrap;
-    justify-content: center;
   }
-  
+
   .beta-badge {
     font-size: 0.6rem;
     padding: 0.2rem 0.4rem;
   }
-  
-  .nav-links {
-    gap: 0.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
+
+  /* Show hamburger menu on mobile */
+  .hamburger-menu {
+    display: flex;
   }
-  
+
+  /* Mobile menu styles */
+  .nav-links {
+    position: fixed;
+    top: 70px;
+    right: -100%;
+    width: 100%;
+    height: calc(100vh - 70px);
+    background: white;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1rem;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    align-items: flex-start;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
   .nav-links a {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.85rem;
+    padding: 1rem;
+    font-size: 1rem;
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid rgba(229, 229, 229, 0.5);
   }
   
   section {
-    padding: 100px 1.5rem 2rem;
-    scroll-snap-align: start;
+    padding: 60px 1.5rem 2rem;
   }
-  
+
   .hero-name {
-    font-size: 2.8rem;
+    font-size: 2rem;
     margin-bottom: 1rem;
   }
   
@@ -922,6 +963,76 @@ section {
   }
 
   .news-content {
-    max-height: 400px;
+    max-height: 300px;
+  }
+
+  .about-text p,
+  .project-description p,
+  .publication-authors {
+    text-align: left;
+  }
+}
+
+/* Medium Phone Breakpoint */
+@media (max-width: 640px) {
+  .hero-name {
+    font-size: 1.9rem;
+  }
+
+  .profile-image {
+    width: 180px;
+    height: 180px;
+  }
+
+  .hero-about-content {
+    gap: 2.5rem;
+  }
+
+  .project-card {
+    padding: 1.25rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+}
+
+/* Small Phone Breakpoint */
+@media (max-width: 480px) {
+  section {
+    padding: 40px 1rem 1.5rem;
+  }
+
+  .hero-name {
+    font-size: 1.8rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .profile-image {
+    width: 160px;
+    height: 160px;
+  }
+
+  .hero-about-content {
+    gap: 2rem;
+  }
+
+  .project-card {
+    padding: 1rem;
+  }
+
+  .news-content {
+    max-height: 250px;
+  }
+
+  .publication-item {
+    padding: 0.75rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
   }
 }
